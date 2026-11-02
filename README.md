@@ -2,7 +2,7 @@
 
 A full-stack travel planning app where users can create trips, generate AI-powered itineraries, and manage their travel plans in one place. Built from scratch as a portfolio project — frontend and backend both self-built.
 
-> 🚧 **Status:** Actively in development. Frontend UI is being built out (static layouts first, then wired to live data). Backend is being scaffolded with Prisma.
+> 🚧 **Status:** Actively in development. Frontend UI is being built out (static layouts first, then wired to live data). Backend auth (signup/login with bcrypt + JWT) is live and connected to the frontend.
 
 ---
 
@@ -28,6 +28,7 @@ A full-stack travel planning app where users can create trips, generate AI-power
 
 - Node.js + TypeScript
 - Prisma ORM
+- bcrypt + JWT (authentication)
 
 ## 📁 Project Structure
 
