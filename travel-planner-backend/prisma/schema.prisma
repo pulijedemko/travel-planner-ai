@@ -1,8 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -10,4 +8,66 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+}
+
+enum Budget {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+model User {
+  id        String   @id @default(cuid())
+  fullName  String
+  email     String   @unique
+  password  String
+  location  String?
+  bio       String?
+  createdAt DateTime @default(now())
+
+  trips Trip[] @relation("TripOwner")
+}
+
+model Trip {
+  id          String   @id @default(cuid())
+  destination String
+  country     String
+  coverImage  String?
+  startDate   DateTime
+  endDate     DateTime
+  budget      Budget
+  createdAt   DateTime @default(now())
+
+  owner   User   @relation("TripOwner", fields: [ownerId], references: [id])
+  ownerId String
+
+  itineraryDays ItineraryDay[]
+}
+
+model ItineraryDay {
+  id        String   @id @default(cuid())
+  dayNumber Int
+  date      DateTime
+
+  trip   Trip   @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  tripId String
+
+  activities ItineraryActivity[]
+}
+
+enum TimeOfDay {
+  MORNING
+  AFTERNOON
+  EVENING
+}
+
+model ItineraryActivity {
+  id          String    @id @default(cuid())
+  timeOfDay   TimeOfDay
+  title       String
+  description String?
+  image       String?
+
+  day   ItineraryDay @relation(fields: [dayId], references: [id], onDelete: Cascade)
+  dayId String
 }
